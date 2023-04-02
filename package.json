@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon -x \"ts-node .\" -e \"ts\""
+    "dev": "nodemon -x \"ts-node .\" -e \"ts\"",
+    "start": "ts-node ."
   },
   "keywords": [],
   "author": "",

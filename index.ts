@@ -1,5 +1,5 @@
 import * as express from 'express'
-import { Client, type UserResolvable } from 'discord.js'
+import { Client } from 'discord.js'
 import * as cors from 'cors'
 
 const client = new Client({
@@ -10,9 +10,9 @@ const app = express()
 
 app.use(cors())
 
-app.get('/ds/profpic/:userid', async (req, res) => {
+app.get('/ds/profpic/:userid', (req, res) => {
   const userid = req.params.userid
-  const isSnowflake = !(userid.split('').some(i => isNaN(Number(i))) as boolean)
+  const isSnowflake = !(userid.split('').some(i => isNaN(Number(i))))
   if (!isSnowflake) {
     res.send({ error: 'invalid id' })
     res.status(404)
@@ -24,17 +24,15 @@ app.get('/ds/profpic/:userid', async (req, res) => {
     res.status(404)
     return
   }
-  let userData: UserResolvable
-  try {
-    client.users.cache.clear()
-    userData = await client.users.fetch(userid)
-  } catch (e: unknown) {
-    res.send({ error: 'user not found' })
-    res.status(404)
-    return
-  }
-  // res.send(userData.displayAvatarURL({ size: 1024 }))
-  res.send(userData.avatarURL({ size: 1024 }))
+  client.users.cache.clear()
+  client.users.fetch(userid).then(data => {
+    res.send(data.avatarURL({ size: 1024 }))
+    res.status(200)
+  })
+    .catch(() => {
+      res.send({ error: 'user not found' })
+      res.status(404)
+    })
 })
 
 app.listen(3000, () => { console.log('Server running on port 3000') })
