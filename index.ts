@@ -7,6 +7,7 @@ const client = new Client({
 })
 
 const app = express()
+const port = process.env.PORT ?? 3000
 
 app.use(cors())
 
@@ -35,7 +36,7 @@ app.get('/ds/profpic/:userid', (req, res) => {
     })
 })
 
-app.listen(3000, () => { console.log('Server running on port 3000') })
+app.listen(port, () => { console.log(`Server running on port ${port}`) })
 
 client.on('ready', () => {
   console.log('client ready')
