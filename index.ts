@@ -27,7 +27,7 @@ app.get('/ds/profpic/:userid', (req, res) => {
   }
   client.users.cache.clear()
   client.users.fetch(userid).then(data => {
-    res.send(data.avatarURL({ size: 1024 }))
+    res.send({ avatar: data.avatarURL({ size: 1024 }), defaultAvatar: data.defaultAvatarURL })
     res.status(200)
   })
     .catch(() => {
@@ -38,7 +38,7 @@ app.get('/ds/profpic/:userid', (req, res) => {
 
 app.listen(port, () => { console.log(`Server running on port ${port}`) })
 
-client.on('ready', () => {
+client.on('ready', async () => {
   console.log('client ready')
 })
 
