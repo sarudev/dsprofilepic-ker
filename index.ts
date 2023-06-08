@@ -1,6 +1,7 @@
 import * as express from 'express'
 import { Client } from 'discord.js'
 import * as cors from 'cors'
+import 'dotenv/config'
 
 const client = new Client({
   intents: []
@@ -42,5 +43,4 @@ client.on('ready', async () => {
   console.log('client ready')
 })
 
-void client.login('MTA5MjEwMTY0NzcwNDAxODk3NA.GLw97E.4V0zU6wKOeePhsi7sn3DKAYneqSFFkznSK08s8')
-// MTA5MjEwMTY0NzcwNDAxODk3NA.GLw97E.4V0zU6wKOeePhsi7sn3DKAYneqSFFkznSK08s8
+void client.login(process.env.TOKEN)
