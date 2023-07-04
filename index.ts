@@ -28,7 +28,7 @@ app.get('/ds/profpic/:userid', (req, res) => {
   }
   client.users.cache.clear()
   client.users.fetch(userid).then(data => {
-    res.send({ avatar: data.avatarURL({ size: 1024 }), defaultAvatar: data.defaultAvatarURL })
+    res.send({ ...data, avatarURL: data.avatarURL({ size: 4096 }) })
     res.status(200)
   })
     .catch(() => {
